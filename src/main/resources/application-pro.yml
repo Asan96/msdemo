@@ -1,0 +1,90 @@
+
+debug: true
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/msdemo?rewriteBatchedStatements=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      aop-patterns: com.ydjk.msdemo
+      filters: stat,wall
+      stat-view-servlet: # 配置监控页功能
+        enabled: true
+        login-username: admin
+        login-password: 1234
+        resetEnable: false
+
+      web-stat-filter:
+        # 监控web
+        enabled: true
+        urlPattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+
+      filter:
+        stat: # 对上面filters里面的stat的详细配置
+          slow-sql-millis: 1000
+          logSlowSql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+  #  rabbitmq:
+  #    host: 192.168.1.68
+  #    port: 5672
+  #    virtual-host: /
+  #    username: admin
+  #    password: 1234
+  #    listener:
+  #      simple:
+  #        prefetch: 5
+  #        retry:
+  #          max-attempts: 3
+  #          enabled: true
+  #        acknowledge-mode: manual
+  #        concurrency: 5  # 开启线程数
+  #        max-concurrency: 5  # 最大线程数
+  #    publisher-returns: true #确认消息已发送到队列(Queue)
+  #    publisher-confirm-type: CORRELATED #确认消息已发送到交换机(Exchange)
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 30000
+    database: 2 #Redis database index (default 0)
+  data:
+    rest:
+      default-page-size: 20
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher #spring.application.name=swagger-springboot
+    log-request-details: true
+    # 定位模板的目录
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+  #    static-path-pattern: /upload/**
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 10MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm # 格式化全局时间字段
+    time-zone: GMT+8 # 指定时间区域类型
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ydjk.msdemo.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    enable-sql-runner: true
+server:
+  port: 866
+  tomcat:
+    uri-encoding: UTF-8
+param:
+  encryptNum: 64
+  staticPath: E:/wangluchao
+  host: http://127.0.0.1:86
